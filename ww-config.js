@@ -1,6 +1,6 @@
 export default {
   editor: {
-    label: { 
+    label: {
       en: "Percentage Circle",
       fr: "Cercle de Pourcentage"
     },
@@ -11,14 +11,14 @@ export default {
   },
   properties: {
     percentage: {
-      label: { 
+      label: {
         en: "Percentage",
         fr: "Pourcentage"
       },
       type: "Number",
       defaultValue: 70,
-      options: { 
-        min: 0, 
+      options: {
+        min: 0,
         max: 100,
         step: 1
       },
@@ -26,11 +26,11 @@ export default {
       section: "settings"
     },
     size: {
-      label: { 
+      label: {
         en: "Size",
         fr: "Taille"
       },
-      type: "Number", 
+      type: "Number",
       defaultValue: 120,
       options: {
         min: 60,
@@ -41,7 +41,7 @@ export default {
       section: "settings"
     },
     primaryColor: {
-      label: { 
+      label: {
         en: "Progress Color",
         fr: "Couleur de Progression"
       },
@@ -51,17 +51,17 @@ export default {
       section: "design"
     },
     backgroundColor: {
-      label: { 
+      label: {
         en: "Background Color",
         fr: "Couleur de Fond"
       },
-      type: "Color", 
+      type: "Color",
       defaultValue: "#F5F5F5",
       bindable: true,
       section: "design"
     },
     strokeWidth: {
-      label: { 
+      label: {
         en: "Stroke Width",
         fr: "Épaisseur du Trait"
       },
@@ -76,7 +76,7 @@ export default {
       section: "design"
     },
     showPercentageText: {
-      label: { 
+      label: {
         en: "Show Percentage Text",
         fr: "Afficher le Texte du Pourcentage"
       },
@@ -86,4 +86,4 @@ export default {
       section: "design"
     }
   }
-}
+};

@@ -1,5 +1,5 @@
 <template>
-  <div class="percentage-circle" :style="{ width: `${content.size}px`, height: `${content.size}px` }">
+  <div class="percentage-circle" :style="containerStyle">
     <svg 
       :width="content.size" 
       :height="content.size" 
@@ -7,10 +7,10 @@
       role="img"
       :aria-label="`${content.percentage}% progress`"
     >
-      <!-- Cercle de fond -->
+      <!-- Background circle -->
       <circle
-        :cx="content.size / 2"
-        :cy="content.size / 2"
+        :cx="center"
+        :cy="center"
         :r="radius"
         :stroke="content.backgroundColor"
         :stroke-width="content.strokeWidth"
@@ -18,10 +18,10 @@
         class="background-circle"
       />
       
-      <!-- Cercle de progression -->
+      <!-- Progress circle -->
       <circle
-        :cx="content.size / 2"
-        :cy="content.size / 2"
+        :cx="center"
+        :cy="center"
         :r="radius"
         :stroke="content.primaryColor"
         :stroke-width="content.strokeWidth"
@@ -35,78 +35,98 @@
       />
     </svg>
     
-    <!-- Texte du pourcentage -->
+    <!-- Percentage text -->
     <div 
       v-if="content.showPercentageText"
       class="percentage-text"
-      :style="{ fontSize: `${content.size * 0.25}px` }"
+      :style="textStyle"
     >
       {{ animatedPercentage }}%
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+<script>
+export default {
+  name: 'PercentageCircle',
+  props: {
+    content: {
+      type: Object,
+      required: true,
+      default: () => ({
+        percentage: 70,
+        size: 120,
+        primaryColor: '#FF6B6B',
+        backgroundColor: '#F5F5F5',
+        strokeWidth: 8,
+        showPercentageText: true
+      })
+    }
+  },
+  data() {
+    return {
+      animatedPercentage: 0
+    }
+  },
+  computed: {
+    containerStyle() {
+      return {
+        width: `${this.content.size}px`,
+        height: `${this.content.size}px`
+      }
+    },
+    center() {
+      return this.content.size / 2
+    },
+    radius() {
+      return (this.content.size - this.content.strokeWidth) / 2
+    },
+    circumference() {
+      return 2 * Math.PI * this.radius
+    },
+    strokeDashoffset() {
+      const progress = this.animatedPercentage / 100
+      return this.circumference - (progress * this.circumference)
+    },
+    textStyle() {
+      return {
+        fontSize: `${this.content.size * 0.25}px`
+      }
+    }
+  },
+  mounted() {
+    this.animateProgress()
+  },
+  watch: {
+    'content.percentage'() {
+      this.animateProgress()
+    }
+  },
+  methods: {
+    animateProgress() {
+      const duration = 1000
+      const startTime = performance.now()
+      const startValue = 0
+      const endValue = this.content.percentage
 
-interface Content {
-  percentage: number
-  size: number
-  primaryColor: string
-  backgroundColor: string
-  strokeWidth: number
-  showPercentageText: boolean
-}
-
-const props = defineProps<{
-  content: Content
-}>()
-
-const animatedPercentage = ref(0)
-
-const radius = computed(() => {
-  return (props.content.size - props.content.strokeWidth) / 2
-})
-
-const circumference = computed(() => {
-  return 2 * Math.PI * radius.value
-})
-
-const strokeDashoffset = computed(() => {
-  const progress = animatedPercentage.value / 100
-  return circumference.value - (progress * circumference.value)
-})
-
-const animateProgress = () => {
-  const duration = 1000 // 1 seconde
-  const startTime = performance.now()
-  const startValue = 0
-  const endValue = props.content.percentage
-
-  const animate = (currentTime: number) => {
-    const elapsed = currentTime - startTime
-    const progress = Math.min(elapsed / duration, 1)
-    
-    // Easing function pour une animation plus fluide
-    const easeProgress = 1 - Math.pow(1 - progress, 3)
-    
-    animatedPercentage.value = Math.round(startValue + (endValue - startValue) * easeProgress)
-    
-    if (progress < 1) {
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        
+        // Easing function
+        const easeProgress = 1 - Math.pow(1 - progress, 3)
+        
+        this.animatedPercentage = Math.round(startValue + (endValue - startValue) * easeProgress)
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate)
+        }
+      }
+      
       requestAnimationFrame(animate)
     }
   }
-  
-  requestAnimationFrame(animate)
 }
-
-onMounted(() => {
-  animateProgress()
-})
-
-watch(() => props.content.percentage, () => {
-  animateProgress()
-})
 </script>
 
 <style scoped>
@@ -144,17 +164,15 @@ watch(() => props.content.percentage, () => {
   user-select: none;
 }
 
-/* Responsive adjustments */
+.percentage-circle:hover .progress-circle {
+  filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.3));
+  transition: filter 0.3s ease;
+}
+
 @media (max-width: 768px) {
   .percentage-circle {
     min-width: 50px;
     min-height: 50px;
   }
-}
-
-/* Animation au hover pour plus d'interactivité */
-.percentage-circle:hover .progress-circle {
-  filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.3));
-  transition: filter 0.3s ease;
 }
 </style>
