@@ -1,0 +1,28 @@
+{
+  "name": "ww-percentage-circle",
+  "version": "1.0.0",
+  "description": "WeWeb component for displaying animated percentage circles with modern design",
+  "main": "ww-config.js",
+  "scripts": {
+    "build": "echo 'WeWeb component ready'",
+    "dev": "echo 'WeWeb component in development'"
+  },
+  "keywords": [
+    "weweb",
+    "vue3",
+    "percentage",
+    "circle",
+    "progress",
+    "component",
+    "animation"
+  ],
+  "author": "WeWeb Component Developer",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "weweb": {
+    "componentType": "element",
+    "category": "data-display"
+  }
+}
