@@ -2,6 +2,17 @@
 
 Un composant Vue 3 moderne pour WeWeb qui affiche un pourcentage avec un cercle de progression animé.
 
+## Structure du projet
+
+```
+📁 Pourcentage-Circle/
+├── 📄 ww-config.js (configuration WeWeb)
+├── 📄 package.json
+├── 📄 README.md
+└── 📁 src/
+    └── 📄 wwElement.vue (composant principal)
+```
+
 ## Fonctionnalités
 
 - ✨ Animation fluide de progression (0 à 100%)
@@ -11,7 +22,7 @@ Un composant Vue 3 moderne pour WeWeb qui affiche un pourcentage avec un cercle 
 - 🎯 Compatible WeWeb avec configuration complète
 - ♿ Accessible avec attributs ARIA
 
-## Configuration
+## Configuration WeWeb
 
 Le composant expose les propriétés suivantes dans l'éditeur WeWeb :
 
@@ -25,12 +36,22 @@ Le composant expose les propriétés suivantes dans l'éditeur WeWeb :
 - **Stroke Width** : Épaisseur du trait (2-20px)
 - **Show Percentage Text** : Afficher/masquer le texte du pourcentage
 
+## Installation dans WeWeb
+
+1. Téléchargez ou clonez ce repository
+2. Importez le dossier dans votre projet WeWeb
+3. Le composant "Percentage Circle" apparaîtra dans la bibliothèque de composants
+4. Glissez-déposez le composant dans votre page
+5. Configurez les propriétés via l'éditeur WeWeb
+
 ## Utilisation
 
-1. Importez le composant dans votre projet WeWeb
-2. Glissez-déposez le composant "Percentage Circle" dans votre page
-3. Configurez les propriétés via l'éditeur WeWeb
-4. Le composant s'anime automatiquement au chargement
+Le composant s'anime automatiquement au chargement et se met à jour quand les propriétés changent. Il est parfaitement intégré à l'écosystème WeWeb avec :
+
+- Propriétés bindables
+- Support multilingue (EN/FR)
+- Catégorisation appropriée
+- Icônes Font Awesome
 
 ## Style
 
@@ -45,3 +66,7 @@ Le composant utilise une palette de couleurs moderne avec :
 - Vue 3+
 - WeWeb Platform
 - Navigateurs modernes (Chrome, Firefox, Safari, Edge)
+
+## Support
+
+Pour toute question ou problème, veuillez créer une issue dans ce repository.
